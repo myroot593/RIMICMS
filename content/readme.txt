@@ -1,0 +1,1 @@
+File tempat gambar berita
