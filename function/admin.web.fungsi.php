@@ -145,13 +145,7 @@ function detail_berita($var_id){
           mysqli_stmt_bind_param($stmt, "i", $param_id);
           $param_id = $var_id;
           if(execute($stmt)){     
-             
-             /*
-             Old Get Result
-             global $row;
-             $result = get_result($stmt);
-             $row = fetch($result, MYSQLI_ASSOC);
-              */
+       
           store_result($stmt);
           mysqli_stmt_bind_result($stmt, $id, $judul_berita, $isi_berita, $penulis_berita, $gambar_berita, $tanggal_berita);
             mysqli_stmt_fetch($stmt);
@@ -177,12 +171,7 @@ function detail_berita_img($var_id){
           $param_id = $var_id;
           if(execute($stmt)){     
              
-             /*
-             Old Get Result
-             global $row;
-             $result = get_result($stmt);
-             $row = fetch($result, MYSQLI_ASSOC);
-              */
+            
           store_result($stmt);
           mysqli_stmt_bind_result($stmt, $var_item, $gambar_berita);
             mysqli_stmt_fetch($stmt);
@@ -251,6 +240,26 @@ function simpan_kategori_berita($kategori_berita){
 	   return $berhasil_simpan;
     } 
 }
+function cek_kategori($kategori_berita){
+  $sql = "SELECT kategori_berita FROM tabel_kategori WHERE kategori_berita = ?";
+  if($stmt = prepare($sql)){
+    mysqli_stmt_bind_param($stmt, "s", $param_kategori_berita);
+    $param_kategori_berita = test_input($kategori_berita);
+    if(execute($stmt)){
+    store_result($stmt);    
+    if(num_rows_2($stmt) == 1){
+          return true;
+          }else{
+          return false;
+      }
+      }else{
+            die ("Terjadi kesalahan ! coba lagi nanti.");
+      }
+    }
+               
+    stmt_close($stmt);
+}
+
 function tampil_kategori_berita(){
   $sql = "SELECT id, kategori_berita FROM tabel_kategori";
   $result = query($sql);
@@ -334,7 +343,127 @@ function cek_username($username){
 
   close_stmt($stmt);
 }
+/* Query Untuk Menu */
+function tambah_single_menu($nama_menu,$kategori_menu,$link_menu,$urut){
+  $sql="INSERT INTO tabel_nav (nama_menu, kategori_menu, link_menu, urut) VALUES (?,?,?,?)";
+  if($stmt=prepare($sql)){
+    mysqli_stmt_bind_param($stmt,"ssss",$param_nama_menu, $param_kategori_menu, $param_link_menu, $param_urut);
+    $param_nama_menu=$nama_menu;
+    $param_kategori_menu=$kategori_menu;
+    $param_link_menu=$link_menu;
+    $param_urut=$urut;
+    if(execute($stmt)){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  stmt_close($stmt);
+}
+function tampil_semua_menu(){
+  $sql="SELECT id, nama_menu, kategori_menu, link_menu, urut, parent FROM tabel_nav";
+  $perintah=query($sql);
+  return $perintah;
+}
+function tampil_menu_dropdown(){
+  $sql="SELECT id, nama_menu, kategori_menu, link_menu, urut FROM tabel_nav WHERE kategori_menu='dropdown_menu'";
+  $perintah=query($sql);
+  return $perintah;
+}
+function tambah_sub_menu($nama_menu,$kategori_menu,$link_menu,$urut,$parent){
+  $sql="INSERT INTO tabel_nav (nama_menu, kategori_menu, link_menu, urut, parent) VALUES (?,?,?,?,?)";
+  if($stmt=prepare($sql)){
+    mysqli_stmt_bind_param($stmt,"sssss",$param_nama_menu, $param_kategori_menu, $param_link_menu, $param_urut, $param_parent);
+    $param_nama_menu=$nama_menu;
+    $param_kategori_menu=$kategori_menu;
+    $param_link_menu=$link_menu;
+    $param_urut=$urut;
+    $param_parent=$parent;
+    if(execute($stmt)){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  stmt_close($stmt);
+}
+/*mengambil id parent berdasarkan nama menunya
 
+Ketika user memilih salah satau dropdown, maka data nama dropdown itu akan diambil, kemudian dibuatkan query untuk mengambil id, id tersebut akan di insertkan kedalam kolom parent
+pada tabel nav
+
+*/
+function tambah_sisip_parent($parent_name){
+  global $id_parent;
+  $sql="SELECT id FROM tabel_nav WHERE nama_menu=?";
+    if($stmt=prepare($sql)){
+      mysqli_stmt_bind_param($stmt,"s",$param_nama_menu);
+      $param_nama_menu=$parent_name;
+      if(execute($stmt)){
+        store_result($stmt);
+        mysqli_stmt_bind_result($stmt,$id_parent);
+        mysqli_stmt_fetch($stmt);
+
+      }else{
+        die("Error: Terjadi kesalahan");
+      }
+    }
+    stmt_close($stmt);
+}
+//mengecek apakah nama menu yang ditambahkan sama
+function cek_nama_menu($nama_menu){
+  $sql="SELECT nama_menu FROM tabel_nav WHERE nama_menu=?";
+  if($stmt=prepare($sql)){
+      mysqli_stmt_bind_param($stmt,"s",$param_nama_menu);
+      $param_nama_menu=$nama_menu;
+      if(execute($stmt)){
+        store_result($stmt);
+        if(num_rows_2($stmt)==1){
+            return true;
+            }else{             
+            return false;
+          }
+   
+      }else{
+        die("Terjadi kesalahan, perintah tidak dapat di eksekusi.");
+      }
+      
+    }
+    stmt_close($stmt);
+
+}
+function menu_edit_view($var_id){
+
+    global $id, $nama_menu, $kategori_menu, $link_menu, $urut, $parent;
+     $sql = "SELECT id, nama_menu, kategori_menu, link_menu, urut, parent FROM tabel_nav  WHERE id = ?";
+      if($stmt = prepare($sql)){
+          mysqli_stmt_bind_param($stmt, "i", $param_id);
+          $param_id = $var_id;
+          if(execute($stmt)){     
+          store_result($stmt);
+          mysqli_stmt_bind_result($stmt, $id, $nama_menu, $kategori_menu, $link_menu, $urut, $parent);
+            mysqli_stmt_fetch($stmt);
+            if(num_rows_2($stmt) == 1){
+              return true;
+              }else{                 
+              return false;
+              }
+
+            }else{
+              echo "Terjadi kesalahan. Coba lagi nanti";
+            }
+             
+          }
+
+             stmt_close($stmt);
+}
+function cek_url_menu($link_menu){
+  if(!preg_match("#^http://[_a-z0-9-]+\\.[_a-z0-9-]+#i",$link_menu)){
+    return true;
+  }else{
+    return false;
+  }
+}
 ?>
 
 
