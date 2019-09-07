@@ -1,19 +1,19 @@
-----------------------------
-Nama CMS : RIMI
-Progarammer : Ahmad Zaelani
-Blog : root93.co.id
-----------------------------
-RIMI CMS merupakan cms gratis yang dibangun menggunakan PHP, Anda dapat menggunakan, memodifikasinya sesuai kebtuhan.
-Saya ucapkan terima kasih yang sebanyak - banyaknya telah menggunakan cms ini dan memberikan kritik ataupun saran
-untuk keperluan pengambangan cms ini.
-
-Dengan menggunakan RIMI CMS Anda setuju dengan syarat dan ketentuan berikut :
-
-1. CMS RIMI merupkan cms yang dapat digunakan secara gratis
-2. CMS RIMI tidak di komersilkan atau diperjual belikan tanpa seizin peimilik
-3. Semua materi yang terdapat pada Cms Rimi merupakan milik root93, dapat digunakan kembali dengan seizin root93
-4. Source/kode sumber yang terdapat pada cms ini dapat Anda gunakan sebebas - bebasnya
-5. Jika Rimi Cms digunakan untuk keperluan, publikasi ulang, skripsi, atau TA, cantumkan root93 sebagai refrensinya
-
-Hormat saya
-ROOT93
+/*
+* Copyright (c) 2019 https://www.root93.co.id
+* "CMS RIMI"
+* Date: 2019-04-01
+* Ver 1.3
+* Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+* Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
+* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+* IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, 
+* INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, 
+* PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+* INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, 
+* STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF 
+* THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*
+*/
