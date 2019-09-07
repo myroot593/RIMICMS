@@ -23,28 +23,15 @@
           }elseif(strlen($_POST['kategori_berita'])>20){
           $kategori_berita_err = "Kategori berita tidak boleh lebih dari 20 karakter ";
           }else{
-          
-          //cek apakah kategori sudah ada sebelumnya
-              $sql = "SELECT kategori_berita FROM tabel_kategori WHERE kategori_berita = ?";
-              //prepared
-              if($stmt = prepare($sql)){
-                
-                  mysqli_stmt_bind_param($stmt, "s", $param_kategori_berita);
-                    $param_kategori_berita = test_input($_POST["kategori_berita"]);
-                   if(execute($stmt)){
-                     $result=get_result($stmt);
-                       if(num_rows($result) == 1){
-                          $kategori_berita_err = "Maaf kategori $param_kategori_berita sudah ada !";
-                        }else{
-                          $kategori_berita= test_input($_POST["kategori_berita"]);
-                          $kategori_berita=mysqli_real_escape_string($koneksi,$kategori_berita);
-                        }
-                    }else{
-                      $kategori_berita_err ="Terjadi kesalahan ! coba lagi nanti.";
-                    }
-              }
+          //cek apakah kategori sudah ada, panggil fungsi cek kategori
+          if(cek_kategori(trim($_POST['kategori_berita']))){
+            $kategori_berita_err = "Maaf kategori ".trim($_POST['kategori_berita'])." sudah ada !";
+            }else{
+            $kategori_berita= test_input($_POST["kategori_berita"]);
+            $kategori_berita=mysqli_real_escape_string($koneksi,$kategori_berita);
+            }
+                               
                
-               stmt_close($stmt);
           }
 
         if(empty($kategori_berita_err)){
@@ -77,6 +64,7 @@
     <div class="form-group">
     <label>Kategori baru :</label>
     <input type="text" name="kategori_berita" class="form-control" id="kategori_berita" placeholder="Masukan kategori berita yang baru" value="<?php echo $kategori_berita;?>" required="">
+    <span class="error-form"><?php echo $kategori_berita_err; ?></span>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
@@ -140,7 +128,7 @@
           </p>
   <?php echo $berhasil_simpan; ?>
   <?php echo $gagal_simpan; ?>
-  <?php echo $kategori_berita_err; ?>
+  
 
 <?php
 include('footer.php');
