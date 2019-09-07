@@ -116,4 +116,14 @@ function readmore_berita($var_id){
 
              stmt_close($stmt);
 }
+function tampil_menu(){
+  $sql="SELECT id, nama_menu, kategori_menu, link_menu, urut, parent FROM tabel_nav order by urut asc";
+  $perintah=query($sql);
+  return $perintah;
+}
+function tampil_sub_menu($menu_id){
+$sql="SELECT id, nama_menu, kategori_menu, link_menu, urut, parent FROM tabel_nav WHERE parent='$menu_id' order by urut ASC";
+$perintah=query($sql);
+return $perintah;
+}
 ?>
