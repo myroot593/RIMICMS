@@ -370,6 +370,13 @@ function tampil_menu_dropdown(){
   $perintah=query($sql);
   return $perintah;
 }
+function tampil_menu_dropdown_edit(){
+  global $parent;
+  $sql="SELECT id, nama_menu FROM tabel_nav WHERE id=$parent";
+  $perintah=query($sql);
+  return $perintah;  
+  
+}
 function tambah_sub_menu($nama_menu,$kategori_menu,$link_menu,$urut,$parent){
   $sql="INSERT INTO tabel_nav (nama_menu, kategori_menu, link_menu, urut, parent) VALUES (?,?,?,?,?)";
   if($stmt=prepare($sql)){
@@ -456,6 +463,37 @@ function menu_edit_view($var_id){
           }
 
              stmt_close($stmt);
+}
+function menu_update($nama_menu, $kategori_menu, $link_menu, $urut, $parent, $id){
+  $sql="UPDATE tabel_nav SET nama_menu=?, kategori_menu=?, link_menu=?, urut=?, parent=? WHERE id=?";
+  if($stmt=prepare($sql)){
+    mysqli_stmt_bind_param($stmt,"sssssi",$param_nama_menu, $param_kategori_menu, $param_link_menu, $param_urut, $param_parent, $param_id);
+    $param_nama_menu=$nama_menu;
+    $param_kategori_menu=$kategori_menu;
+    $param_link_menu=$link_menu;
+    $param_urut=$urut;
+    $param_parent=$parent;
+    $param_id=$id;
+    if(execute($stmt)){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  stmt_close($stmt);
+}
+function menu_delete($var_id){
+  $sql="DELETE FROM tabel_nav WHERE id=?";
+  if($stmt=prepare($sql)){
+    mysqli_stmt_bind_param($stmt,"i",$param_id);
+    $param_id=$var_id;
+    if(execute($stmt)){
+      return true;
+    }else{
+      return false;
+    }
+  }
+  stmt_close($stmt);
 }
 function cek_url_menu($link_menu){
   if(!preg_match("#^http://[_a-z0-9-]+\\.[_a-z0-9-]+#i",$link_menu)){
