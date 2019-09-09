@@ -8,9 +8,13 @@
 //Database function and session
   include ('../databases/koneksi.php');
   include ('../function/admin.web.fungsi.php');
-  include('menu.var.php');
+  
 ?>
 <?php
+$berhasil_simpan = $nama_menu = $kategori_menu = $link_menu = $urut = $parent ="";
+$berhasil_simpan_err = $nama_menu_err = $kategori_menu_err = $link_menu_err = $urut_err = "";
+$nama_menu_1 = $kategori_menu_1 = $link_menu_1 = $urut_1 = $parent_1 ="";
+ $nama_menu_err_1 = $kategori_menu_err_1 = $link_menu_err_1 = $urut_err_1 = $parent_err_1 = "";
 //sub Menu
   if(isset($_POST['kirim_data_sub'])){
     if(empty(trim($_POST['nama_menu_1']))){
@@ -66,10 +70,10 @@
     if(empty($nama_menu_err_1) && empty($kategori_menu_err_1)&& empty($link_menu_err_1) && empty($urut_err_1) && empty($parent_err_1)){
          //panggil fungsi simpan berita
              if(tambah_sub_menu($nama_menu_1,$kategori_menu_1,$link_menu_1,$urut_1,$parent_1)){
-                    $berhasil_simpan = "Data berhasil disimpan";
+                     $berhasil_simpan = "<div class='alert alert-success'>Data menu berhasil disimpan</div>";
                     echo "<meta http-equiv=\"refresh\"content=\"2;URL=menu.php\"/>";
                 }else{
-                    $berhasil_simpan_err = "Data gagal disimpan";
+                     $berhasil_simpan_err = "<div class='alert alert-danger'>Gagal menyimpan menu baru</div>";
                 }
 
     }
@@ -119,10 +123,10 @@
     if(empty($nama_menu_err) && empty($kategori_menu_err)&& empty($link_menu_err) && empty($urut_err)){
          //panggil fungsi simpan berita
              if(tambah_single_menu($nama_menu,$kategori_menu,$link_menu,$urut)){
-                    $berhasil_simpan = "Data berhasil disimpan";
+                   $berhasil_simpan = "<div class='alert alert-success'>Data menu berhasil disimpan</div>";
                     echo "<meta http-equiv=\"refresh\"content=\"2;URL=menu.php\"/>";
                 }else{
-                    $berhasil_simpan_err = "Data gagal disimpan";
+                     $berhasil_simpan_err = "<div class='alert alert-danger'>Gagal menyimpan menu baru</div>";
                 }
 
     }
@@ -155,19 +159,19 @@
     <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
     <li class="nav-item">
-      <a class="nav-link active" data-toggle="tab" href="#home">MENU BARU</a>
+      <a class="nav-link" data-toggle="tab" href="#home">MENU BARU</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" data-toggle="tab" href="#menu1">SUB MENU</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" data-toggle="tab" href="#menu2">DATA MENU</a>
+      <a class="nav-link active" data-toggle="tab" href="#menu2">DATA MENU</a>
     </li>
      
   </ul>
 <div class="tab-content">
-  <div id="home" class="container tab-pane active"><br>
-    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post" enctype="multipart/form-data">
+  <div id="home" class="container tab-pane fade"><br>
+    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
       <div class="form-group">
           <label>Judul Menu :</label>
           <input type="text" name="nama_menu" class="form-control" id="nama_menu" placeholder="Masukan judul menu" value="<?php echo $nama_menu; ?>">
@@ -195,7 +199,7 @@
     </form>
   </div>
   <div id="menu1" class="container tab-pane fade"><br>
-    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post" enctype="multipart/form-data">
+    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
       <div class="form-group">
           <label>Judul Menu :</label>
           <input type="text" name="nama_menu_1" class="form-control" id="nama_menu_1" placeholder="Masukan judul menu" value="<?php echo $nama_menu_1; ?>">
@@ -233,7 +237,7 @@
       <button type="submit" name="kirim_data_sub" class="btn btn-primary">Submit</button>
     </form>
    </div>
-  <div id="menu2" class="container tab-pane fade"><br>
+  <div id="menu2" class="container tab-pane active"><br>
     <div class="table-responsive">
       <?php 
                         $result=tampil_semua_menu(); //memanggil fungsi tampil berita
@@ -278,7 +282,7 @@
                    echo "<td>";
                     
                      echo "<a href='menu.edit.php?id=".$data['id']."'title='Edit Menu' alt='Edit Menu'><i class='fa fa-edit fa-fw small'></i></a>";
-
+                      echo "<a href='menu.delete.php?id=".$data['id']."'title='Delete Menu' alt='Delete Menu'><i class='fa fa-trash fa-fw small'></i></a>";
                     
 
                     echo "</td>";
