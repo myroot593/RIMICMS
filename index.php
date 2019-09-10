@@ -2,9 +2,10 @@
 //Include properties
   include ('databases/koneksi.php');
   include ('function/public.web.fungsi.php');
-  include ('head.php');
-  include ('css.php');
-  include ('navigasi.php');
+  include ('function/template.web.fungsi.php');
+  load_header();
+  load_css();
+  load_navigasi();
 ?>
 
       <!-- Page Heading -->
@@ -77,6 +78,6 @@ $pages = ceil($total/$halaman);
 
 <?php
 //footer
-include('footer.php');
+load_footer();
 ?>
   
