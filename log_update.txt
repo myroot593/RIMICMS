@@ -1,5 +1,6 @@
 1. Release CMS RIMI 1.0 (2019/04)
 2. Update penggantian get result menjadi bind result (16/05/2019) V.1.1
-3. Bugs bagian update dan penambahan fitur menyimpan gambar sebelumnya saat update
-4. Penambahan Modul Menu (2019/09)
+3. Bugs bagian update dan penambahan fitur menyimpan gambar sebelumnya saat update v.1.2
+4. Penambahan Modul Menu (2019/09) v.1.3
 5. Meringkas file head css footer dan navigasi untuk user kedalam function (10/09/19)
+6. Meringkas kode login php ke dalam fungsi (13/09/19)
